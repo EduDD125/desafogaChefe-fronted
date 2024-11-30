@@ -1,0 +1,143 @@
+.signup-modal__background {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signup-modal__container {
+    width: 40vw;
+    max-width: 600px;
+    padding: 20px 10px 20px 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-title h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+}
+
+.signup-modal__form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 70vh;
+    overflow: scroll;
+}
+
+.signup-modal__form label {
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    color: #555;
+}
+
+.signup-modal__form input,
+.signup-modal__form select {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    max-width: 95%;
+    box-sizing: border-box;
+}
+
+.signup-modal__form input:focus,
+.signup-modal__form select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.button-area {
+    display: flex;
+    width: auto;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-right: 20px;
+    box-sizing: content-box;
+}
+
+.button-area button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button-area button[type="button"] {
+    background-color: #f44336;
+    color: #fff;
+}
+
+.button-area button[type="button"]:hover {
+    background-color: #d32f2f;
+    transform: scale(1.05);
+}
+
+.button-area button[type="submit"] {
+    background-color: #4caf50;
+    color: #fff;
+}
+
+.button-area button[type="submit"]:hover {
+    background-color: #388e3c;
+    transform: scale(1.05);
+}
+
+.button-area button[readonly] {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
+.error-message {
+    color: #f44336;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* Estilo para destacar o campo com erro */
+.input-error {
+    border: 1px solid #e74c3c; /* Borda vermelha para indicar erro */
+    background-color: #fbeaea; /* Fundo ligeiramente rosado */
+}
+
+/* Estilo para a mensagem de erro */
+.error-message {
+    color: #e74c3c; /* Texto vermelho */
+    font-size: 0.9em; /* Tamanho da fonte um pouco menor */
+    margin-top: 4px;
+    margin-bottom: 10px;
+    padding-left: 5px;
+    display: block; /* Certifica-se que a mensagem de erro fica abaixo do input */
+}
+
+/* Estilo adicional para a área de botões em caso de erro */
+.button-area .error-message {
+    margin-bottom: 15px;
+    font-weight: bold; /* Deixa a mensagem mais destacada */
+}
+
+/* Efeito de transição para suavizar a mudança ao erro */
+.input-error,
+.error-message {
+    transition: all 0.2s ease;
+}

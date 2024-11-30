@@ -1,0 +1,16 @@
+.logo {
+    padding: 16px 24px;
+    background-color: #333;
+    border-radius: 12px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    display: inline-block;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+h1 {
+    color: #4caf50;
+    font-size: 28px;
+    margin: 0;
+    text-align: center;
+    font-family: 'Georgia', 'Times New Roman', serif; 
+}

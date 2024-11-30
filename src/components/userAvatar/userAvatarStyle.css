@@ -1,0 +1,33 @@
+.user-avatar__photo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: auto;
+    padding: 0 8px;
+}
+
+.user-avatar__photo-container .user-avatar__photo {
+    border-radius: 50%;
+    height: 60px; /* Tamanho padrão */
+    width: 60px;
+    object-fit: cover;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: height 0.3s, width 0.3s; /* Animação suave para ajuste de tamanho */
+}
+
+/* Ajustes para telas menores */
+@media (max-width: 768px) {
+    .user-avatar__photo-container .user-avatar__photo {
+        height: 32px; /* Reduz o tamanho do avatar */
+        width: 32px;
+    }
+}
+
+@media (max-width: 480px) {
+    .user-avatar__photo-container .user-avatar__photo {
+        height: 24px; /* Ainda menor em telas muito pequenas */
+        width: 24px;
+    }
+}

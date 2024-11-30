@@ -1,0 +1,12 @@
+.nav {
+    display: flex;
+    justify-content: space-between;
+    background-color: black;
+    align-items: center;
+    height: 15vh;
+}
+
+.nav__buttons-container {
+    display: flex;
+    gap: 24px
+}

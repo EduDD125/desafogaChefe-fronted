@@ -1,0 +1,161 @@
+.item__container {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.item__title h3 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    color: #555;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="email"],
+input[type="password"],
+select {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.button-area {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.button-area button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button-area button[type="button"] {
+    background-color: #000000;
+    color: #fff;
+}
+
+.button-area button[type="button"]:hover {
+    background-color: #000000;
+    transform: scale(1.05);
+}
+
+.button-area button[type="submit"] {
+    background-color: #4caf50;
+    color: #fff;
+}
+
+.button-area button[type="submit"]:hover {
+    background-color: #388e3c;
+    transform: scale(1.05);
+}
+
+.button-area button[readonly] {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
+p {
+    color: #000000;
+    font-size: 14px;
+    text-align: center;
+}
+
+.add_button {
+    padding: 12px 24px;
+    font-size: 16px;
+    color: #000000;
+    background-color: #d3d3d3; /* Cinza claro */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.add_button:hover {
+    background-color: #b0b0b0; /* Cinza mais escuro para hover */
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.add_button:active {
+    background-color: #a0a0a0; /* Cinza ainda mais escuro para active */
+    transform: scale(1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.add_button:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(211, 211, 211, 0.5); /* Sombra de foco */
+}
+
+.error-message {
+    color: #f44336;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* Estilo para destacar o campo com erro */
+.input-error {
+    border: 1px solid #e74c3c; /* Borda vermelha para indicar erro */
+    background-color: #fbeaea; /* Fundo ligeiramente rosado */
+}
+
+/* Estilo para a mensagem de erro */
+.error-message {
+    color: #e74c3c; /* Texto vermelho */
+    font-size: 0.9em; /* Tamanho da fonte um pouco menor */
+    margin-top: 4px;
+    margin-bottom: 10px;
+    padding-left: 5px;
+    display: block; /* Certifica-se que a mensagem de erro fica abaixo do input */
+}
+
+/* Estilo adicional para a área de botões em caso de erro */
+.button-area .error-message {
+    margin-bottom: 15px;
+    font-weight: bold; /* Deixa a mensagem mais destacada */
+}
+
+/* Efeito de transição para suavizar a mudança ao erro */
+.input-error,
+.error-message {
+    transition: all 0.2s ease;
+}
