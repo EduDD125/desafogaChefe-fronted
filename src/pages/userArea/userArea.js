@@ -38,29 +38,19 @@ export default function UserArea() {
 
     const [refreshTable, setRefreshTable] = useState(false);
 
-    const mockAddresses = [
-        {
-            id: 1,
-            street: "123 Main St",
-            city: "Springfield",
-            state: "IL",
-            postalCode: "62701",
-        },
-        {
-            id: 2,
-            street: "456 Elm St",
-            city: "Chicago",
-            state: "IL",
-            postalCode: "60616",
-        },
-    ];
+    
 
     // Atualizar dados e definir o painel principal ao trocar de opção
     useEffect(() => {
         setData([]);
         async function fetchDataFromHook() {
             if (option) {
-                setData(mockAddresses); // Substitua pelo seu fetch real se necessário
+                try {
+                    const response = performCrudOperation(option, "get");
+                    console.log("data fetch:", response);
+                } catch (error) {
+                    console.log("error:", error)
+                }
             }
         }
 
@@ -141,7 +131,12 @@ export default function UserArea() {
     useEffect(() => {
         async function fetchDataFromHook() {
             if (option) {
-                setData(mockAddresses); // Substitua pelo seu fetch real se necessário
+                try {
+                    const response = performCrudOperation(option, "get");
+                    console.log("data fetch:", response);
+                } catch (error) {
+                    console.log("error:", error)
+                }
             }
         }
 
@@ -164,7 +159,7 @@ export default function UserArea() {
                                 <ControlPainel option={option} />
 
                                 {/* Tabelas associadas a cada opção */}
-                                {option === "addresses" && (
+                                {option === "address" && (
                                     <AddressTable data={data} option={option} setItem={setItem} />
                                 )}
                                 {option === "colaborators" && (

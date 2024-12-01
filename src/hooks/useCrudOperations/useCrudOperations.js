@@ -10,7 +10,7 @@ export default function useCrudOperations() {
         setLoading(true);
         setError(null);
 
-        let endpoint = `/${entity}`;
+        let endpoint = `/${entity}/`;
         if (id) {
             endpoint += `/${id}`;
         }
