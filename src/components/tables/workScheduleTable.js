@@ -22,12 +22,12 @@ export default function WorkScheduleTable({ data, setItem }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((item, index) => (
+                    {data?.map((item, index) => (
                         <tr key={index} onClick={() => setItem(item)}>
-                            <td>{item.id}</td>
-                            <td>{item.beginOfShift}</td>
-                            <td>{item.endOfShift}</td>
-                            <td>{Array.from(item.workingDays).join(", ")}</td>
+                            <td>{item?.id}</td>
+                            <td>{item?.beginOfShift}</td>
+                            <td>{item?.endOfShift}</td>
+                            <td>{Array.from(item?.workingDays).join(", ")}</td>
                         </tr>
                     ))}
                 </tbody>

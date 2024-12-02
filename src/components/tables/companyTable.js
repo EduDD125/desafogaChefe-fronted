@@ -24,9 +24,9 @@ export default function CompanyTable({ data, setItem }) {
                 <tbody>
                     {data.map((item, index) => (
                         <tr key={index} onClick={() => setItem(item)}>
-                            <td>{item.name}</td>
-                            <td>{item.CNPJ}</td>
-                            <td>{item.email}</td>
+                            <td>{item?.name}</td>
+                            <td>{item?.CNPJ}</td>
+                            <td>{item?.email}</td>
                             <td>
                                 {item?.address?.street}, {item?.address?.city}, {item?.address?.state}, {item?.address?.postalCode}
                             </td>

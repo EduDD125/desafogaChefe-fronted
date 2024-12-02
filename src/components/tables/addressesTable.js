@@ -23,13 +23,13 @@ export default function AddressTable({ data, setItem }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((item, index) => (
+                    {data?.map((item, index) => (
                         <tr key={index} onClick={() => setItem(item)}>
-                            <td>{item.number}</td>
-                            <td>{item.street}</td>
-                            <td>{item.city}</td>
-                            <td>{item.state}</td>
-                            <td>{item.postalCode}</td>
+                            <td>{item?.number}</td>
+                            <td>{item?.street}</td>
+                            <td>{item?.city}</td>
+                            <td>{item?.state}</td>
+                            <td>{item?.postalCode}</td>
                         </tr>
                     ))}
                 </tbody>

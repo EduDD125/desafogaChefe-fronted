@@ -20,7 +20,7 @@ export default function JobTable({ data, setItem }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((item, index) => (
+                    {data?.map((item, index) => (
                         <tr key={index} onClick={() => setItem(item)}>
                             <td>{item.title}</td>
                             <td>{item.bruteCostPerHour}</td>

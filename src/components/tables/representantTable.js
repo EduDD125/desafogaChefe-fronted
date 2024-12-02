@@ -21,10 +21,10 @@ export default function RepresentantTable({ data, setItem }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((item, index) => (
+                    {data?.map((item, index) => (
                         <tr key={index} onClick={() => setItem(item)}>
-                            <td>{item.id}</td>
-                            <td>{item.name}</td>
+                            <td>{item?.id}</td>
+                            <td>{item?.name}</td>
                             <td>{item?.company?.name}</td>
                         </tr>
                     ))}

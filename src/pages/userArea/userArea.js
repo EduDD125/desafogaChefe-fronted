@@ -47,8 +47,9 @@ export default function UserArea() {
             if (option) {
                 try {
                     const response = await performCrudOperation(option, "get");
+                    if (response.status == 200) 
+                        setData(response)
                     console.log("data fetch:", response);
-                    setData(response)
                 } catch (error) {
                     console.log("error:", error)
                 }

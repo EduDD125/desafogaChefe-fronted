@@ -4,20 +4,37 @@ import useSaveData from "../../../hooks/saveData/saveData.js";
 import useCrudOperations from "../../../hooks/useCrudOperations/useCrudOperations.js";
 
 export default function AddColaboratorsModal({ setIsModalOpen }) {
-    const [formData, setFormData] = useState( {} );
-    const [jobs, setjobs] = useState([]);
-const [workSchedules, setWorkSchedules] = useState([]);
-    const { performCrudOperation, loading, error } = useCrudOperations();
+    const [formData, setFormData] = useState({
+        userRecord: {
+            login: "",
+            password: "",
+            isAdmin: false,
+        },
+        colaboratorRecord: {
+            name: "",
+            CPF: "",
+            job: "",
+            workSchedule: "",
+            isAvailableForLoan: false,
+        },
+    });
+
+    const [jobs, setJobs] = useState([]);
+    const [workSchedules, setWorkSchedules] = useState([]);
+    const { performCrudOperation, loading } = useCrudOperations();
     const saveData = useSaveData();
 
     useEffect(() => {
         async function fetchRelatedData() {
-            const jobRequest = await performCrudOperation("jobs", "get");;
-            setjobs(jobRequest);
-            
-            const workSchedulesRequest = await performCrudOperation("work-schedules", "get");
-            setWorkSchedules(workSchedulesRequest);
-            console.log("jobRequest:", jobRequest)
+            try {
+                const jobRequest = await performCrudOperation("jobs", "get");
+                setJobs(jobRequest);
+
+                const workSchedulesRequest = await performCrudOperation("work-schedules", "get");
+                setWorkSchedules(workSchedulesRequest);
+            } catch (error) {
+                console.error("Error fetching related data:", error);
+            }
         }
         fetchRelatedData();
     }, []);
@@ -26,73 +43,152 @@ const [workSchedules, setWorkSchedules] = useState([]);
         setIsModalOpen(false);
     }
 
-    async function handleAddition(e) {
-        e.preventDefault();
-        try {
-            console.log("Adicionando ", formData);
-            setIsModalOpen(false);
-            await saveData("colaborators", formData);
-        } catch (err) {
-            console.error(err);
+    function handleChange(e) {
+        const { name, value } = e.target;
+
+        if (["login", "password", "isAdmin"].includes(name)) {
+            setFormData((prev) => ({
+                ...prev,
+                userRecord: {
+                    ...prev.userRecord,
+                    [name]: name === "isAdmin" ? value === "true" : value,
+                },
+            }));
+        } else {
+            setFormData((prev) => ({
+                ...prev,
+                colaboratorRecord: {
+                    ...prev.colaboratorRecord,
+                    [name]: name === "isAvailableForLoan" ? value === "true" : value,
+                },
+            }));
         }
     }
 
-    function handleChange(e) {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+    async function handleAddition(e) {
+        e.preventDefault();
+        try {
+            console.log("Enviando:", formData);
+            await saveData("colaborators", formData);
+            setIsModalOpen(false);
+        } catch (error) {
+            console.error("Erro ao adicionar colaborador:", error);
+        }
     }
 
     return (
-        <div className="modal__background" onClick={() => handleClose()}>
+        <div className="modal__background" onClick={handleClose}>
             <div className="modal__container" onClick={(e) => e.stopPropagation()}>
-                <h2>Adicionar colaborators</h2>
+                <h2>Adicionar Colaborador</h2>
+                <form onSubmit={handleAddition}>
+                    {/* Campos para ColaboratorRecord */}
+                    <label>
+                        Nome:
+                        <input
+                            type="text"
+                            name="name"
+                            value={formData.colaboratorRecord.name}
+                            onChange={handleChange}
+                            required
+                        />
+                    </label>
+                    <label>
+                        CPF:
+                        <input
+                            type="text"
+                            name="CPF"
+                            value={formData.colaboratorRecord.CPF}
+                            onChange={handleChange}
+                            required
+                        />
+                    </label>
+                    <label>
+                        Cargo:
+                        <select
+                            name="job"
+                            value={formData.colaboratorRecord.job}
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value="">Selecione um cargo...</option>
+                            {jobs.map((job) => (
+                                <option key={job.id} value={job.id}>
+                                    {job.title}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
+                    <label>
+                        Horário de Trabalho:
+                        <select
+                            name="workSchedule"
+                            value={formData.colaboratorRecord.workSchedule}
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value="">Selecione um horário...</option>
+                            {workSchedules.map((schedule) => (
+                                <option key={schedule.id} value={schedule.id}>
+                                    {schedule.id}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
+                    <label>
+                        Disponível para empréstimo:
+                        <select
+                            name="isAvailableForLoan"
+                            value={formData.colaboratorRecord.isAvailableForLoan}
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value="">Selecione...</option>
+                            <option value="true">Sim</option>
+                            <option value="false">Não</option>
+                        </select>
+                    </label>
 
-                {(jobs && workSchedules) ? 
-                    <form onSubmit={handleAddition}>
-                        <label>name: <input type='text' name='name' onChange={handleChange} required /></label>
-                        <label>CPF: <input type='text' name='CPF' onChange={handleChange} required /></label>
-                        <label>job:
-                            <select name="job">
-                                {jobs && jobs.map((job) => (
-                                    <option key={job.id} value={job.id} onChange={handleChange}>
-                                        {job.title}
-                                    </option>
-                                ))}
-                            </select>
+                    {/* Campos para UserRecord */}
+                    <label>
+                        Login:
+                        <input
+                            type="text"
+                            name="login"
+                            value={formData.userRecord.login}
+                            onChange={handleChange}
+                            required
+                        />
+                    </label>
+                    <label>
+                        Senha:
+                        <input
+                            type="password"
+                            name="password"
+                            value={formData.userRecord.password}
+                            onChange={handleChange}
+                            required
+                        />
+                    </label>
+                    <label>
+                        Administrador:
+                        <select
+                            name="isAdmin"
+                            value={formData.userRecord.isAdmin}
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value="false">Não</option>
+                            <option value="true">Sim</option>
+                        </select>
+                    </label>
 
-                        </label>
-                        <label>workSchedule:
-                        <select name="workSchedule">
-                                {workSchedules && workSchedules.map((workSchedule) => (
-                                    <option key={workSchedule.id} value={workSchedule.id} onChange={handleChange}>
-                                        {workSchedule.id}
-                                    </option>
-                                ))}
-                            </select>
-                        </label>
-                        <label>Is available for loan:
-                            <select name="workSchedule">
-                                    <option key={0} value={true} onChange={handleChange}>
-                                        yes
-                                    </option>
-                                    <option key={1} value={false} onChange={handleChange}>
-                                        no
-                                    </option>
-                            </select>
-                        </label>
-
-                        <div className="button-area">
-                            <button onClick={handleClose}>Cancelar</button>
-                            <button type="submit">Adicionar</button>
-                        </div>
-                    </form>
-                    :
-                    <>
-                        {!jobs && <p>The aren´t jobs registered in the system. Add some before trying to add collaborators.</p>}
-                        {!workSchedules && <p>The aren´t work schedules registered in the system. Add some before trying to add collaborators.</p>}
-                    </>
-                }
-                
+                    <div className="button-area">
+                        <button type="button" onClick={handleClose}>
+                            Cancelar
+                        </button>
+                        <button type="submit">Adicionar</button>
+                    </div>
+                </form>
             </div>
         </div>
     );

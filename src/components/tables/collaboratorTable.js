@@ -22,12 +22,12 @@ export default function CollaboratorTable({ data, setItem }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((item, index) => (
+                    {data?.map((item, index) => (
                         <tr key={index} onClick={() => setItem(item)}>
-                            <td>{item.name}</td>
-                            <td>{item.CPF}</td>
+                            <td>{item?.colaboratorName}</td>
+                            <td>{item?.cpf}</td>
                             <td>{item?.job?.title}</td>
-                            <td>{item.workSchedule}</td>
+                            <td>{item?.workSchedule?.beginOfShift}, {item?.workSchedule?.endOfShift}</td>
                         </tr>
                     ))}
                 </tbody>
@@ -35,5 +35,5 @@ export default function CollaboratorTable({ data, setItem }) {
         );
     }
 
-    return <p>No collaborators available.</p>;
+    return (<p>No collaborators available.</p>);
 }

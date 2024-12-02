@@ -24,14 +24,14 @@ export default function FinancialReportTable({ data, setItem }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((item, index) => (
+                    {data?.map((item, index) => (
                         <tr key={index} onClick={() => setItem(item)}>
                             <td>{item?.loan?.name}</td>
-                            <td>{item.hoursWorked}</td>
-                            <td>{item.totalCost}</td>
-                            <td>{item.basePay}</td>
-                            <td>{item.extraPay}</td>
-                            <td>{item.transportationCost}</td>
+                            <td>{item?.hoursWorked}</td>
+                            <td>{item?.totalCost}</td>
+                            <td>{item?.basePay}</td>
+                            <td>{item?.extraPay}</td>
+                            <td>{item?.transportationCost}</td>
                         </tr>
                     ))}
                 </tbody>

@@ -1,18 +1,18 @@
 import "./saveDataModalStyle.css";
 import { useState, useEffect } from "react";
 import useSaveData from "../../../hooks/saveData/saveData.js";
-import useFetchData from "../../../hooks/entities/fetchData";
+import useCrudOperations from "../../../hooks/useCrudOperations/useCrudOperations.js";
 
 export default function AddRepresentantsModal({ setIsModalOpen }) {
     const [formData, setFormData] = useState( {} );
-    const [relatedData, setRelatedData] = useState({});
-    const { fetchData } = useFetchData();
+    const [companies, setCompanies] = useState({});
+    const { performCrudOperation, loading } = useCrudOperations();
     const saveData = useSaveData();
 
     useEffect(() => {
         async function fetchRelatedData() {
-            const data = await fetchData("{{RELATED_URL}}");
-            setRelatedData(data);
+            const companiesRequest = await performCrudOperation("companies", "get");
+            setCompanies(companiesRequest);
         }
         fetchRelatedData();
     }, []);
@@ -43,8 +43,20 @@ export default function AddRepresentantsModal({ setIsModalOpen }) {
                 <h2>Adicionar representants</h2>
                 <form onSubmit={handleAddition}>
                     <label>id: <input type='text' name='id' onChange={handleChange} required /></label>
-<label>name: <input type='text' name='name' onChange={handleChange} required /></label>
-<label>company: <input type='text' name='company' onChange={handleChange} required /></label>
+                    <label>name: <input type='text' name='name' onChange={handleChange} required /></label>
+                    <label>Company:
+                            {companies && companies.length > 0 ? (
+                                <select name="address" onChange={handleChange} required>
+                                    {companies.map((value) => (
+                                        <option key={value.id} value={value.id}>
+                                            {value.street}, {value.number}, {value.city}, {value.state}
+                                        </option>
+                                    ))}
+                                </select>
+                            ) : (
+                                <p>Add companies before adding representats</p>
+                            )}
+                        </label>
 
                     <div className="button-area">
                         <button onClick={handleClose}>Cancelar</button>

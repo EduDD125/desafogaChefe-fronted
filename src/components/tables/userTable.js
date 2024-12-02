@@ -22,11 +22,11 @@ export default function UserTable({ data, setItem }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((item, index) => (
+                    {data?.map((item, index) => (
                         <tr key={index} onClick={() => setItem(item)}>
-                            <td>{item.login}</td>
-                            <td>{item.password}</td>
-                            <td>{item.isAdmin ? "Yes" : "No"}</td>
+                            <td>{item?.login}</td>
+                            <td>{item?.password}</td>
+                            <td>{item?.isAdmin ? "Yes" : "No"}</td>
                         </tr>
                     ))}
                 </tbody>
