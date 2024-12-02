@@ -99,7 +99,8 @@ export default function UserNavbar({ tipo, setOption }) {
                     <NavButton text="Companies" tipo="companies" action={seeCompanies} />
                     <NavButton text="Jobs" tipo="jobs" action={seeJobs} />
                     <NavButton text="Loans" tipo="loans" action={seeLoans} />
-                    <NavButton text="Representants" tipo="representants" action={seeRepresentants} />
+                    <NavButton text="Users" tipo="users" action={seeUsers} />
+                    
                     <NavButton text="Financial Reports" tipo="financial-reports" action={seeFinancialReports} />
                     <NavButton text="Work Schedules" tipo="work-schedules" action={seeWorkSchedules} />
                 </div>

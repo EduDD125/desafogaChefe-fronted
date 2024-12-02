@@ -9,6 +9,8 @@ export default function AddCompaniesModal({ setIsModalOpen }) {
     const { performCrudOperation, loading } = useCrudOperations();
     const [addresses, setAddresses] = useState([]);
 
+    const companyId = localStorage.getItem("companiesLentgh");
+
     useEffect(() => {
         async function fetchRelatedData() {
             try {
@@ -30,7 +32,7 @@ export default function AddCompaniesModal({ setIsModalOpen }) {
         e.preventDefault();
         try {
             console.log("Adicionando ", formData);
-            const response = await performCrudOperation("companies", "get", formData);
+            const response = await performCrudOperation("companies", "post", formData);
             console.log(response)
             setIsModalOpen(false);
             } catch (error) {
@@ -66,7 +68,7 @@ export default function AddCompaniesModal({ setIsModalOpen }) {
                         <label>
                             Address:
                             {addresses && addresses.length > 0 ? (
-                                <select name="address" onChange={handleChange} required>
+                                <select name="addressId" onChange={handleChange} required>
                                     <option key={0} value={""}>
                                             choose a address....
                                         </option>

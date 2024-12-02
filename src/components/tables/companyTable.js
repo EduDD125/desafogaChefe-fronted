@@ -6,9 +6,12 @@ import DeleteButton from '../buttons/deleteButton.js'
 export default function CompanyTable({ data, setItem }) {
     const [tableItensList, setTableItensList] = useState([]);
 
+
     useEffect(() => {
         if (data && data.length > 0) {
             setTableItensList(data);
+            localStorage.setItem("companiesLentgh", data.length + 1);
+
         }
     }, [data]);
 
@@ -29,7 +32,7 @@ export default function CompanyTable({ data, setItem }) {
                         <tr key={index} onClick={() => setItem(item)}>
                             <td><DeleteButton entityType={"companies"} id={item.id} /></td>
                             <td>{item?.name}</td>
-                            <td>{item?.CNPJ}</td>
+                            <td>{item?.cnpj}</td>
                             <td>{item?.email}</td>
                             <td>
                                 {item?.address?.street}, {item?.address?.city}, {item?.address?.state}, {item?.address?.postalCode}
