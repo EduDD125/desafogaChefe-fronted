@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import DeleteButton from '../buttons/deleteButton.js'
 import "./table.css";
 
 export default function JobTable({ data, setItem }) {
@@ -15,6 +16,7 @@ export default function JobTable({ data, setItem }) {
             <table className="table_style">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Title</th>
                         <th>Brute Cost Per Hour</th>
                     </tr>
@@ -22,6 +24,7 @@ export default function JobTable({ data, setItem }) {
                 <tbody>
                     {data?.map((item, index) => (
                         <tr key={index} onClick={() => setItem(item)}>
+                            <td><DeleteButton entityType={"jobs"} id={item.id} /></td>
                             <td>{item.title}</td>
                             <td>{item.bruteCostPerHour}</td>
                         </tr>

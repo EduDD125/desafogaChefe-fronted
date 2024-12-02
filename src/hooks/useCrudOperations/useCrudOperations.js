@@ -12,7 +12,7 @@ export default function useCrudOperations() {
 
         let endpoint = `/${entity}/`;
         if (id) {
-            endpoint += `/${id}`;
+            endpoint += `${id}`;
         }
         console.log("id:", id)
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./table.css";
+import DeleteButton from '../buttons/deleteButton.js'
 
 export default function AddressTable({ data, setItem }) {
     const [tableItensList, setTableItensList] = useState([]);
@@ -15,6 +16,7 @@ export default function AddressTable({ data, setItem }) {
             <table className="table_style">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Number</th>
                         <th>Street</th>
                         <th>City</th>
@@ -25,6 +27,7 @@ export default function AddressTable({ data, setItem }) {
                 <tbody>
                     {data?.map((item, index) => (
                         <tr key={index} onClick={() => setItem(item)}>
+                            <td><DeleteButton entityType={"address"} id={item.id} /></td>
                             <td>{item?.number}</td>
                             <td>{item?.street}</td>
                             <td>{item?.city}</td>

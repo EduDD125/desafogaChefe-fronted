@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import "./table.css";
+import DeleteButton from '../buttons/deleteButton.js'
+
 
 export default function WorkScheduleTable({ data, setItem }) {
     const [tableItensList, setTableItensList] = useState([]);
@@ -15,6 +17,7 @@ export default function WorkScheduleTable({ data, setItem }) {
             <table className="table_style">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>ID</th>
                         <th>Begin of Shift</th>
                         <th>End of Shift</th>
@@ -24,6 +27,7 @@ export default function WorkScheduleTable({ data, setItem }) {
                 <tbody>
                     {data?.map((item, index) => (
                         <tr key={index} onClick={() => setItem(item)}>
+                            <td><DeleteButton entityType={"work-schedules"} id={item.id} /></td>
                             <td>{item?.id}</td>
                             <td>{item?.beginOfShift}</td>
                             <td>{item?.endOfShift}</td>

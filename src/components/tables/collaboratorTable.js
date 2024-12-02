@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./table.css";
+import DeleteButton from '../buttons/deleteButton.js'
 
 export default function CollaboratorTable({ data, setItem }) {
     const [tableItensList, setTableItensList] = useState([]);
@@ -15,6 +16,7 @@ export default function CollaboratorTable({ data, setItem }) {
             <table className="table_style">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Name</th>
                         <th>CPF</th>
                         <th>Job</th>
@@ -24,6 +26,7 @@ export default function CollaboratorTable({ data, setItem }) {
                 <tbody>
                     {data?.map((item, index) => (
                         <tr key={index} onClick={() => setItem(item)}>
+                            <td><DeleteButton entityType={"colaborators"} id={item.id} /></td>
                             <td>{item?.colaboratorName}</td>
                             <td>{item?.cpf}</td>
                             <td>{item?.job?.title}</td>

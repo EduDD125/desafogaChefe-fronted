@@ -8,12 +8,8 @@ export default function useDeleteData() {
 
     async function deleteData( itemType, itemId) {
 
-        const endpoint = `${itemType}/${itemId}`;
-        
-        console.log("endpoint: ", endpoint);
-
         try {
-            const response = await performCrudOperation(endpoint, "delete");
+            const response = await performCrudOperation(itemType, "delete", null, itemId);
             console.log(response);
             if (response && response.status === 200) setRefreshTable(!refreshTable);
             return response.data;
