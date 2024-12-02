@@ -73,7 +73,7 @@ export default function WorkSchedule({ data }) {
                 <label>
                     Dias de Trabalho:
                     <div>
-                        {["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"].map((day) => (
+                        {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map((day) => (
                             <label key={day}>
                                 <input
                                     type="checkbox"

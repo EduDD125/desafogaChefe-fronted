@@ -34,7 +34,7 @@ export default function UserNavbar({ tipo, setOption }) {
     }
     
     function seeAddresses() {
-        setOption("addresses");
+        setOption("address");
     }
     
     function seeCompanies() {

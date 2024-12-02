@@ -6,14 +6,10 @@ export default function useSaveData() {
     const {refreshTable, setRefreshTable} = useContext(refreshTableContext)
     const { performCrudOperation, loading, error } = useCrudOperations();
 
-    async function saveData( itemType, itemId) {
-
-        const endpoint = `${itemType}/${itemId}`;
-        
-        console.log("endpoint: ", endpoint);
+    async function saveData( itemType, data) {
 
         try {
-            const response = await performCrudOperation(endpoint, "put");
+            const response = await performCrudOperation(itemType, "post", data, null);
             console.log(response);
             if (response && response.status === 200) setRefreshTable(!refreshTable);
             return response.data;

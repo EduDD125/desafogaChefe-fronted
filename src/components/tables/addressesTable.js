@@ -3,7 +3,7 @@ import "./table.css";
 
 export default function AddressTable({ data, setItem }) {
     const [tableItensList, setTableItensList] = useState([]);
-
+    
     useEffect(() => {
         if (data && data.length > 0) {
             setTableItensList(data);
@@ -15,6 +15,7 @@ export default function AddressTable({ data, setItem }) {
             <table className="table_style">
                 <thead>
                     <tr>
+                        <th>Number</th>
                         <th>Street</th>
                         <th>City</th>
                         <th>State</th>
@@ -24,6 +25,7 @@ export default function AddressTable({ data, setItem }) {
                 <tbody>
                     {data.map((item, index) => (
                         <tr key={index} onClick={() => setItem(item)}>
+                            <td>{item.number}</td>
                             <td>{item.street}</td>
                             <td>{item.city}</td>
                             <td>{item.state}</td>

@@ -46,8 +46,9 @@ export default function UserArea() {
         async function fetchDataFromHook() {
             if (option) {
                 try {
-                    const response = performCrudOperation(option, "get");
+                    const response = await performCrudOperation(option, "get");
                     console.log("data fetch:", response);
+                    setData(response)
                 } catch (error) {
                     console.log("error:", error)
                 }
@@ -94,7 +95,7 @@ export default function UserArea() {
     // Atualizar painel ao mudar o item selecionado
     useEffect(() => {
         switch (option) {
-            case "addresses":
+            case "address":
                 setPainel(<Address data={item} />);
                 break;
             case "colaborators":
@@ -132,8 +133,9 @@ export default function UserArea() {
         async function fetchDataFromHook() {
             if (option) {
                 try {
-                    const response = performCrudOperation(option, "get");
+                    const response = await performCrudOperation(option, "get");
                     console.log("data fetch:", response);
+                    setData(response)
                 } catch (error) {
                     console.log("error:", error)
                 }

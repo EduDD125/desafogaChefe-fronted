@@ -24,7 +24,6 @@ export default function UserTable({ data, setItem }) {
                 <tbody>
                     {data.map((item, index) => (
                         <tr key={index} onClick={() => setItem(item)}>
-                            <td>{item.id}</td>
                             <td>{item.login}</td>
                             <td>{item.password}</td>
                             <td>{item.isAdmin ? "Yes" : "No"}</td>

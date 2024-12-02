@@ -3,7 +3,7 @@ import "./table.css";
 
 export default function JobTable({ data, setItem }) {
     const [tableItensList, setTableItensList] = useState([]);
-
+    console.log(data);
     useEffect(() => {
         if (data && data.length > 0) {
             setTableItensList(data);
