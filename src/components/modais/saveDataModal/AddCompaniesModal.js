@@ -30,9 +30,10 @@ export default function AddCompaniesModal({ setIsModalOpen }) {
         e.preventDefault();
         try {
             console.log("Adicionando ", formData);
+            const response = await performCrudOperation("companies", "get", formData);
+            console.log(response)
             setIsModalOpen(false);
-            await saveData("companies", formData);
-        } catch (error) {
+            } catch (error) {
             console.error("Error saving data:", error);
         }
     }
@@ -66,8 +67,11 @@ export default function AddCompaniesModal({ setIsModalOpen }) {
                             Address:
                             {addresses && addresses.length > 0 ? (
                                 <select name="address" onChange={handleChange} required>
+                                    <option key={0} value={""}>
+                                            choose a address....
+                                        </option>
                                     {addresses.map((value) => (
-                                        <option key={value.id} value={value.id}>
+                                        <option key={value.id+1} value={value.id}>
                                             {value.street}, {value.number}, {value.city}, {value.state}
                                         </option>
                                     ))}
