@@ -1,5 +1,5 @@
 import { useState } from "react";
-import AddAddressesModal from "../modais/saveDataModal/AddAddressesModal";
+import AddAddressesModal from "../modais/saveDataModal/addAdressesModal";
 import AddCollaboratorsModal from "../modais/saveDataModal/AddColaboratorsModal";
 import AddCompaniesModal from "../modais/saveDataModal/AddCompaniesModal";
 import AddJobsModal from "../modais/saveDataModal/AddJobsModal";
@@ -25,7 +25,7 @@ export default function ControlPainel({ option }) {
             </button>
             {openModal && (
                 <>
-                    {option === "addresses" && (
+                    {option === "address" && (
                         <AddAddressesModal setIsModalOpen={setOpenModal} />
                     )}
                     {option === "colaborators" && (

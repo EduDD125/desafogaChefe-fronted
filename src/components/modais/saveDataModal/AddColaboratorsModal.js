@@ -1,18 +1,23 @@
 import "./saveDataModalStyle.css";
 import { useState, useEffect } from "react";
 import useSaveData from "../../../hooks/saveData/saveData.js";
-import useFetchData from "../../../hooks/entities/fetchData";
+import useCrudOperations from "../../../hooks/useCrudOperations/useCrudOperations.js";
 
 export default function AddColaboratorsModal({ setIsModalOpen }) {
     const [formData, setFormData] = useState( {} );
-    const [relatedData, setRelatedData] = useState({});
-    const { fetchData } = useFetchData();
+    const [jobs, setjobs] = useState([]);
+const [workSchedules, setWorkSchedules] = useState([]);
+    const { performCrudOperation, loading, error } = useCrudOperations();
     const saveData = useSaveData();
 
     useEffect(() => {
         async function fetchRelatedData() {
-            const data = await fetchData("{{RELATED_URL}}");
-            setRelatedData(data);
+            const jobRequest = await performCrudOperation("jobs", "get");;
+            setjobs(jobRequest);
+            
+            const workSchedulesRequest = await performCrudOperation("work-schedules", "get");
+            setWorkSchedules(workSchedulesRequest);
+            console.log("jobRequest:", jobRequest)
         }
         fetchRelatedData();
     }, []);
@@ -41,18 +46,53 @@ export default function AddColaboratorsModal({ setIsModalOpen }) {
         <div className="modal__background" onClick={() => handleClose()}>
             <div className="modal__container" onClick={(e) => e.stopPropagation()}>
                 <h2>Adicionar colaborators</h2>
-                <form onSubmit={handleAddition}>
-                    <label>name: <input type='text' name='name' onChange={handleChange} required /></label>
-                    <label>CPF: <input type='text' name='CPF' onChange={handleChange} required /></label>
-                    <label>job: <input type='text' name='job' onChange={handleChange} required /></label>
-                    <label>workSchedule: <input type='text' name='workSchedule' onChange={handleChange} required /></label>
-                    <label>isAvailableForLoan: <input type='text' name='isAvailableForLoan' onChange={handleChange} required /></label>
 
-                    <div className="button-area">
-                        <button onClick={handleClose}>Cancelar</button>
-                        <button type="submit">Adicionar</button>
-                    </div>
-                </form>
+                {(jobs && workSchedules) ? 
+                    <form onSubmit={handleAddition}>
+                        <label>name: <input type='text' name='name' onChange={handleChange} required /></label>
+                        <label>CPF: <input type='text' name='CPF' onChange={handleChange} required /></label>
+                        <label>job:
+                            <select name="job">
+                                {jobs && jobs.map((job) => (
+                                    <option key={job.id} value={job.id} onChange={handleChange}>
+                                        {job.title}
+                                    </option>
+                                ))}
+                            </select>
+
+                        </label>
+                        <label>workSchedule:
+                        <select name="workSchedule">
+                                {workSchedules && workSchedules.map((workSchedule) => (
+                                    <option key={workSchedule.id} value={workSchedule.id} onChange={handleChange}>
+                                        {workSchedule.id}
+                                    </option>
+                                ))}
+                            </select>
+                        </label>
+                        <label>Is available for loan:
+                            <select name="workSchedule">
+                                    <option key={0} value={true} onChange={handleChange}>
+                                        yes
+                                    </option>
+                                    <option key={1} value={false} onChange={handleChange}>
+                                        no
+                                    </option>
+                            </select>
+                        </label>
+
+                        <div className="button-area">
+                            <button onClick={handleClose}>Cancelar</button>
+                            <button type="submit">Adicionar</button>
+                        </div>
+                    </form>
+                    :
+                    <>
+                        {!jobs && <p>The aren´t jobs registered in the system. Add some before trying to add collaborators.</p>}
+                        {!workSchedules && <p>The aren´t work schedules registered in the system. Add some before trying to add collaborators.</p>}
+                    </>
+                }
+                
             </div>
         </div>
     );

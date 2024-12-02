@@ -25,7 +25,7 @@ export default function RepresentantTable({ data, setItem }) {
                         <tr key={index} onClick={() => setItem(item)}>
                             <td>{item.id}</td>
                             <td>{item.name}</td>
-                            <td>{item.company.name}</td>
+                            <td>{item?.company?.name}</td>
                         </tr>
                     ))}
                 </tbody>

@@ -26,7 +26,7 @@ export default function CollaboratorTable({ data, setItem }) {
                         <tr key={index} onClick={() => setItem(item)}>
                             <td>{item.name}</td>
                             <td>{item.CPF}</td>
-                            <td>{item.job.title}</td>
+                            <td>{item?.job?.title}</td>
                             <td>{item.workSchedule}</td>
                         </tr>
                     ))}

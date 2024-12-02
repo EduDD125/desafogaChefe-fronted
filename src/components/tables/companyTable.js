@@ -28,7 +28,7 @@ export default function CompanyTable({ data, setItem }) {
                             <td>{item.CNPJ}</td>
                             <td>{item.email}</td>
                             <td>
-                                {item.address.street}, {item.address.city}, {item.address.state}, {item.address.postalCode}
+                                {item?.address?.street}, {item?.address?.city}, {item?.address?.state}, {item?.address?.postalCode}
                             </td>
                         </tr>
                     ))}

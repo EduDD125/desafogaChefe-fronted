@@ -28,14 +28,14 @@ export default function LoanTable({ data, setItem }) {
                 <tbody>
                     {data.map((item, index) => (
                         <tr key={index} onClick={() => setItem(item)}>
-                            <td>{item.loanedColaborator.name}</td>
-                            <td>{item.loaningCompany?.name || "N/A"}</td>
-                            <td>{item.loanerCompany.name}</td>
-                            <td>{item.loanJob.title}</td>
-                            <td>{new Date(item.startTime).toLocaleString()}</td>
-                            <td>{new Date(item.endTime).toLocaleString()}</td>
-                            <td>{item.agreedPayRate.toFixed(2)}</td>
-                            <td>{item.loanStatus}</td>
+                            <td>{item?.loanedColaborator?.name}</td>
+                            <td>{item?.loaningCompany?.name || "N/A"}</td>
+                            <td>{item?.loanerCompany?.name}</td>
+                            <td>{item?.loanJob?.title}</td>
+                            <td>{new Date(item?.startTime).toLocaleString()}</td>
+                            <td>{new Date(item?.endTime).toLocaleString()}</td>
+                            <td>{item?.agreedPayRate.toFixed(2)}</td>
+                            <td>{item?.loanStatus}</td>
                         </tr>
                     ))}
                 </tbody>

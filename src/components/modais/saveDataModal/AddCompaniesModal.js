@@ -1,24 +1,26 @@
 import "./saveDataModalStyle.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useSaveData from "../../../hooks/saveData/saveData.js";
-import useFetchData from "../../../hooks/entities/fetchData.js";
-import { GiConsoleController } from "react-icons/gi";
+import useCrudOperations from "../../../hooks/useCrudOperations/useCrudOperations.js";
 
 export default function AddCompaniesModal({ setIsModalOpen }) {
-    const [formData, setFormData] = useState( {} );
+    const [formData, setFormData] = useState({});
     const saveData = useSaveData();
-    const {fetchData, loading} = useFetchData();
-    const [addresses, setAddresses] = useState();
+    const { performCrudOperation, loading } = useCrudOperations();
+    const [addresses, setAddresses] = useState([]);
 
-    useFetchData( () => {
-        try {
-            const response = fetchData("/address/");
-            if (response.status == 200) setAddresses(response);
-            console.log(response);
-        } catch(error) {
-            console.log(error);
+    useEffect(() => {
+        async function fetchRelatedData() {
+            try {
+                const response = await performCrudOperation("address", "get");
+                setAddresses(response); // Extraindo 'data'
+                console.log(response)
+            } catch (error) {
+                console.error("Error fetching addresses:", error);
+            }
         }
-    },[] )
+        fetchRelatedData();
+    }, []);
 
     function handleClose() {
         setIsModalOpen(false);
@@ -31,7 +33,7 @@ export default function AddCompaniesModal({ setIsModalOpen }) {
             setIsModalOpen(false);
             await saveData("companies", formData);
         } catch (error) {
-            console.error(error);
+            console.error("Error saving data:", error);
         }
     }
 
@@ -41,32 +43,49 @@ export default function AddCompaniesModal({ setIsModalOpen }) {
     }
 
     return (
-        <div className="modal__background" onClick={() => handleClose()}>
+        <div className="modal__background" onClick={handleClose}>
             <div className="modal__container" onClick={(e) => e.stopPropagation()}>
-                <h2>Adicionar companies</h2>
-                <form onSubmit={handleAddition}>
-                    <label>name: <input type='text' name='name' onChange={handleChange} required /></label>
-                    <label>CNPJ: <input type='text' name='CNPJ' onChange={handleChange} required /></label>
-                    <label>email: <input type='text' name='email' onChange={handleChange} required /></label>
-                    <label>address: 
-                        {addresses ?
-                                <select name='address'>
-                                {addresses.map((value, index) => (
-                                    <option key={index} value={value.toLowerCase().replace(/\s+/g, '-')}>
-                                    {value}
-                                    </option>
-                                ))}
+                <h2>Adicionar Companies</h2>
+                {loading ? (
+                    <p>Carregando...</p>
+                ) : (
+                    <form onSubmit={handleAddition}>
+                        <label>
+                            Name:
+                            <input type="text" name="name" onChange={handleChange} required />
+                        </label>
+                        <label>
+                            CNPJ:
+                            <input type="text" name="CNPJ" onChange={handleChange} required />
+                        </label>
+                        <label>
+                            Email:
+                            <input type="text" name="email" onChange={handleChange} required />
+                        </label>
+                        <label>
+                            Address:
+                            {addresses && addresses.length > 0 ? (
+                                <select name="address" onChange={handleChange} required>
+                                    {addresses.map((value) => (
+                                        <option key={value.id} value={value.id}>
+                                            {value.street}, {value.number}, {value.city}, {value.state}
+                                        </option>
+                                    ))}
                                 </select>
-                        :
-                            <p>Add addresses before adding companies</p>
-                        }                        
-                    </label>
-
-                    <div className="button-area">
-                        <button onClick={handleClose}>Cancelar</button>
-                        {addresses != undefined && <button type="submit" disabled>Adicionar</button> }
-                    </div>
-                </form>
+                            ) : (
+                                <p>Add addresses before adding companies</p>
+                            )}
+                        </label>
+                        <div className="button-area">
+                            <button type="button" onClick={handleClose}>
+                                Cancelar
+                            </button>
+                            <button type="submit" disabled={!addresses || addresses.length === 0}>
+                                Adicionar
+                            </button>
+                        </div>
+                    </form>
+                )}
             </div>
         </div>
     );
