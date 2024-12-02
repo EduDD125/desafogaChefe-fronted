@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import useEditData from "../../hooks/entities/editData";
-import { tipo } from "../../hooks/getUserType";
+import  useCrudOperations  from "../../hooks/useCrudOperations/useCrudOperations.js";
 
 export default function Address({ data }) {
     const [street, setStreet] = useState(data.street || "");
     const [city, setCity] = useState(data.city || "");
     const [state, setState] = useState(data.state || "");
     const [postalCode, setPostalCode] = useState(data.postalCode || "");
-    const { editData, loading, error, setError } = useEditData();
+    const  { performCrudOperation, loading, error } = useCrudOperations();
     const [errors, setErrors] = useState({});
 
     useEffect(() => {
@@ -15,7 +15,6 @@ export default function Address({ data }) {
         setCity(data.city || "");
         setState(data.state || "");
         setPostalCode(data.postalCode || "");
-        setError("");
         setErrors({});
     }, [data]);
 
@@ -31,12 +30,15 @@ export default function Address({ data }) {
 
     async function handleEdition(event) {
         event.preventDefault();
-        setError("");
         if (!validateFields()) return;
 
-        const newAddressData = { street, city, state, postalCode };
+        const id = data.id;
+
+        const newAddressData = { id, street, city, state, postalCode };
+        console.log(newAddressData)
         const option = "addresses";
-        await editData(option, tipo(), data.id, newAddressData);
+        const response = await performCrudOperation('address', "put", {id: data.id, Address: {id: data.id, Address: newAddressData}});
+        console.log(response);
     }
 
     return (

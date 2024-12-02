@@ -8,7 +8,7 @@ export default function AddColaboratorsModal({ setIsModalOpen }) {
         userRecord: {
             login: "",
             password: "",
-            isAdmin: false,
+            isAdmin: false, // Valor fixo como false
         },
         colaboratorRecord: {
             name: "",
@@ -46,12 +46,12 @@ export default function AddColaboratorsModal({ setIsModalOpen }) {
     function handleChange(e) {
         const { name, value } = e.target;
 
-        if (["login", "password", "isAdmin"].includes(name)) {
+        if (["login", "password"].includes(name)) {
             setFormData((prev) => ({
                 ...prev,
                 userRecord: {
                     ...prev.userRecord,
-                    [name]: name === "isAdmin" ? value === "true" : value,
+                    [name]: value,
                 },
             }));
         } else {
@@ -168,18 +168,6 @@ export default function AddColaboratorsModal({ setIsModalOpen }) {
                             onChange={handleChange}
                             required
                         />
-                    </label>
-                    <label>
-                        Administrador:
-                        <select
-                            name="isAdmin"
-                            value={formData.userRecord.isAdmin}
-                            onChange={handleChange}
-                            required
-                        >
-                            <option value="false">Não</option>
-                            <option value="true">Sim</option>
-                        </select>
                     </label>
 
                     <div className="button-area">
