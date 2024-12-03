@@ -1,37 +1,46 @@
 import { useEffect, useState } from "react";
 import useEditData from "../../hooks/entities/editData";
 import { tipo } from "../../hooks/getUserType";
+import useCrudOperations from "../../hooks/useCrudOperations/useCrudOperations.js";
 
 export default function Loan({ data }) {
     const [loanedColaborator, setLoanedColaborator] = useState(data.loanedColaborator?.name || "");
     const [loaningCompany, setLoaningCompany] = useState(data.loaningCompany?.name || "");
-    const [loanerCompany, setLoanerCompany] = useState(data.loanerCompany?.name || "");
+    const [loanerCompany, setLoanerCompany] = useState(data.loanerCompany?.id || "");
     const [loanJob, setLoanJob] = useState(data.loanJob?.title || "");
     const [startTime, setStartTime] = useState(data.startTime || "");
     const [endTime, setEndTime] = useState(data.endTime || "");
     const [agreedPayRate, setAgreedPayRate] = useState(data.agreedPayRate || 0);
-    const [loanStatus, setLoanStatus] = useState(data.loanStatus || "");
     const { editData, loading, error, setError } = useEditData();
     const [errors, setErrors] = useState({});
+    const [companies, setCompanies] = useState([]);
+    const { performCrudOperation } = useCrudOperations();
 
     useEffect(() => {
         setLoanedColaborator(data.colaborator?.colaboratorName || "");
         setLoaningCompany(data.loaningCompany?.name || "");
-        setLoanerCompany(data.loanerCompany?.name || "");
-        setLoanJob(data?.job?.title || "");
+        setLoanerCompany(data.loanerCompany?.id || "");
+        setLoanJob(data.job?.title || "");
         setStartTime(data.startTime || "");
         setEndTime(data.endTime || "");
         setAgreedPayRate(data.agreedPayRate || 0);
-        setLoanStatus(data.status || "");
         setError("");
         setErrors({});
+
+        async function fetchCompanies() {
+            try {
+                const companiesRequest = await performCrudOperation("companies", "get");
+                setCompanies(companiesRequest);
+            } catch (fetchError) {
+                console.error("Error fetching companies:", fetchError);
+            }
+        }
+        fetchCompanies();
     }, [data]);
 
     function validateFields() {
         let newErrors = {};
-        if (!startTime) newErrors.startTime = "Hora de início é obrigatória.";
-        if (!endTime) newErrors.endTime = "Hora de término é obrigatória.";
-        if (agreedPayRate <= 0) newErrors.agreedPayRate = "Taxa de pagamento deve ser maior que zero.";
+        if (!loanerCompany) newErrors.loanerCompany = "Empresa recebedora é obrigatória.";
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     }
@@ -41,24 +50,19 @@ export default function Loan({ data }) {
         setError("");
         if (!validateFields()) return;
 
-        const newLoanData = {
-            loanedColaborator,
-            loaningCompany,
-            loanerCompany,
-            loanJob,
-            startTime,
-            endTime,
-            agreedPayRate,
-            loanStatus,
-        };
-        const option = "loans";
-        await editData(option, tipo(), data.id, newLoanData);
+        const updatedLoanData = loanerCompany;
+
+        try {
+            await editData("loans", tipo(), data.id, updatedLoanData);
+        } catch (editError) {
+            console.error("Error editing loan:", editError);
+        }
     }
 
     return (
         <div className="item__container">
             <div className="item__title">
-                <h3>Dados do Empréstimo</h3>
+                <h3>Editar Empresa Recebedora</h3>
             </div>
             <form onSubmit={handleEdition}>
                 <label>
@@ -66,7 +70,6 @@ export default function Loan({ data }) {
                     <input
                         type="text"
                         value={loanedColaborator}
-                        onChange={(e) => setLoanedColaborator(e.target.value)}
                         disabled
                     />
                 </label>
@@ -76,19 +79,27 @@ export default function Loan({ data }) {
                     <input
                         type="text"
                         value={loaningCompany}
-                        onChange={(e) => setLoaningCompany(e.target.value)}
                         disabled
                     />
                 </label>
 
                 <label>
                     Empresa Recebedora:
-                    <input
-                        type="text"
+                    <select
+                        name="loanerCompany"
                         value={loanerCompany}
                         onChange={(e) => setLoanerCompany(e.target.value)}
-                        disabled
-                    />
+                        className={errors.loanerCompany ? "input-error" : ""}
+                        required
+                    >
+                        <option value="">Selecione uma empresa...</option>
+                        {companies.map((company) => (
+                            <option key={company.id} value={company.id}>
+                                {company.name}
+                            </option>
+                        ))}
+                    </select>
+                    {errors.loanerCompany && <p className="error-message">{errors.loanerCompany}</p>}
                 </label>
 
                 <label>
@@ -96,7 +107,6 @@ export default function Loan({ data }) {
                     <input
                         type="text"
                         value={loanJob}
-                        onChange={(e) => setLoanJob(e.target.value)}
                         disabled
                     />
                 </label>
@@ -106,10 +116,8 @@ export default function Loan({ data }) {
                     <input
                         type="datetime-local"
                         value={startTime}
-                        onChange={(e) => setStartTime(e.target.value)}
-                        className={errors.startTime ? "input-error" : ""}
+                        disabled
                     />
-                    {errors.startTime && <p className="error-message">{errors.startTime}</p>}
                 </label>
 
                 <label>
@@ -117,10 +125,8 @@ export default function Loan({ data }) {
                     <input
                         type="datetime-local"
                         value={endTime}
-                        onChange={(e) => setEndTime(e.target.value)}
-                        className={errors.endTime ? "input-error" : ""}
+                        disabled
                     />
-                    {errors.endTime && <p className="error-message">{errors.endTime}</p>}
                 </label>
 
                 <label>
@@ -128,30 +134,17 @@ export default function Loan({ data }) {
                     <input
                         type="number"
                         value={agreedPayRate}
-                        onChange={(e) => setAgreedPayRate(Number(e.target.value))}
-                        className={errors.agreedPayRate ? "input-error" : ""}
+                        disabled
                     />
-                    {errors.agreedPayRate && <p className="error-message">{errors.agreedPayRate}</p>}
                 </label>
 
-                <label>
-                    Status:
-                    <select
-                        value={loanStatus}
-                        onChange={(e) => setLoanStatus(e.target.value)}
-                    >
-                        <option value="Active">Ativo</option>
-                        <option value="Completed">Concluído</option>
-                    </select>
-                </label>
-
-                {error && <p className="error-message">{error.response?.data?.message}</p>}
+                {error && <p className="error-message">{error.response?.data?.message || "Erro ao editar empréstimo."}</p>}
 
                 <div className="button-area">
                     {loading ? (
                         <button disabled>Editando...</button>
                     ) : (
-                        <button type="submit">Salvar Edição</button>
+                        <button type="submit">Salvar Alteração</button>
                     )}
                 </div>
             </form>

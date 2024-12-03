@@ -35,7 +35,7 @@ export default function LoanTable({ data, setItem }) {
                             <td>{item?.colaborator?.colaboratorName}</td>
                             <td>{item?.loaningCompany?.name || "N/A"}</td>
                             <td>{item?.loanerCompany?.name}</td>
-                            <td>{item?.loanJob?.title}</td>
+                            <td>{item?.job?.title}</td>
                             <td>{new Date(item?.startTime).toLocaleString()}</td>
                             <td>{new Date(item?.endTime).toLocaleString()}</td>
                             <td>{item?.agreedPayRate?.toFixed(2)}</td>
