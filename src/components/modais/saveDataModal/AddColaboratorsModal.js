@@ -15,7 +15,7 @@ export default function AddColaboratorsModal({ setIsModalOpen }) {
             CPF: "",
             job: "",
             workSchedule: "",
-            isAvailableForLoan: false,
+            isAvailableForLoan: true,
         },
     });
 
