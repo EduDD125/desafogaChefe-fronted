@@ -40,7 +40,7 @@ export default function AddWorkSchedulesModal({ setIsModalOpen }) {
         setFormData({ ...formData, [name]: value });
     }
 
-    const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    const daysOfWeek = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"];
 
     return (
         <div className="modal__background" onClick={() => handleClose()}>

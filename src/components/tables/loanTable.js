@@ -32,14 +32,14 @@ export default function LoanTable({ data, setItem }) {
                     {data?.map((item, index) => (
                         <tr key={index} onClick={() => setItem(item)}>
                             <td><DeleteButton entityType={"loans"} id={item.id} /></td>
-                            <td>{item?.loanedColaborator?.name}</td>
+                            <td>{item?.colaborator?.colaboratorName}</td>
                             <td>{item?.loaningCompany?.name || "N/A"}</td>
                             <td>{item?.loanerCompany?.name}</td>
                             <td>{item?.loanJob?.title}</td>
                             <td>{new Date(item?.startTime).toLocaleString()}</td>
                             <td>{new Date(item?.endTime).toLocaleString()}</td>
                             <td>{item?.agreedPayRate?.toFixed(2)}</td>
-                            <td>{item?.loanStatus}</td>
+                            <td>{item?.status}</td>
                         </tr>
                     ))}
                 </tbody>

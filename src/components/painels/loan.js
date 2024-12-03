@@ -15,14 +15,14 @@ export default function Loan({ data }) {
     const [errors, setErrors] = useState({});
 
     useEffect(() => {
-        setLoanedColaborator(data.loanedColaborator?.name || "");
+        setLoanedColaborator(data.colaborator?.colaboratorName || "");
         setLoaningCompany(data.loaningCompany?.name || "");
         setLoanerCompany(data.loanerCompany?.name || "");
-        setLoanJob(data.loanJob?.title || "");
+        setLoanJob(data?.job?.title || "");
         setStartTime(data.startTime || "");
         setEndTime(data.endTime || "");
         setAgreedPayRate(data.agreedPayRate || 0);
-        setLoanStatus(data.loanStatus || "");
+        setLoanStatus(data.status || "");
         setError("");
         setErrors({});
     }, [data]);
