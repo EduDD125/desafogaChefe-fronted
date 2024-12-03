@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./table.css";
 import DeleteButton from '../buttons/deleteButton.js'
+import DocumentButton from "../buttons/documentButton.js";
 
 
 export default function FinancialReportTable({ data, setItem }) {
@@ -18,6 +19,7 @@ export default function FinancialReportTable({ data, setItem }) {
                 <thead>
                     <tr>
                         <th></th>
+                        <th></th>
                         <th>Loan</th>
                         <th>Hours Worked</th>
                         <th>Total Cost</th>
@@ -30,6 +32,7 @@ export default function FinancialReportTable({ data, setItem }) {
                     {data?.map((item, index) => (
                         <tr key={index} onClick={() => setItem(item)}>
                             <td><DeleteButton entityType={"financial-reports"} id={item.id} /></td>
+                            <td><DocumentButton entityType={"financial-reports"} id={item.id} /></td>
                             <td>{item?.loan?.name}</td>
                             <td>{item?.hoursWorked}</td>
                             <td>{item?.totalCost}</td>
